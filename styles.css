@@ -255,15 +255,25 @@ body.light{
   body.light .mini-gallery img{ border-color:#e3e9f1; }
   body.light #costChart{ background:#ffffff; border:1px solid var(--border); }
   
-/* Logo en login */
+/* Estilo minimalista para el logo */
 .logo-box {
   display: flex;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .logo-img {
-  max-width: 140px;    /* ajusta el tamaño del logo */
+  max-width: 140px;      /* tamaño controlado */
   height: auto;
+  border-radius: 18px;   /* bordes redondeados */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* sombra suave */
+  padding: 6px;          /* respiro alrededor */
+  background: #ffffff10; /* fondo sutil translúcido */
+  backdrop-filter: blur(4px); /* efecto vidrio minimalista */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.logo-img:hover {
+  transform: scale(1.04); /* efecto ligero al pasar el mouse */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}

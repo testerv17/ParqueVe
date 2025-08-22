@@ -418,6 +418,108 @@
   ];
   const gal = $('#expGaleria');
   gal.innerHTML = photos.map(src =>
-    `<img src="${src}" alt="Foto ${unidad}" onerror="this.style.display='none'">`
+    `<img src="${src}" alt="Foto ${unidad}" onclick="openLightbox('${src}')" onerror="this.style.display='none'">`
   ).join('');
+    // === Costos acumulados (ficticios, estáticos por unidad) ===
+  // Puedes ajustar estas cifras a tu gusto:
+  const costosPorUnidad = {
+    'NIC-T2': { 'Mano de Obra': 42000, 'Refacciones': 68000, 'Otros': 15000 },
+    'MEX-T5': { 'Mano de Obra': 35000, 'Refacciones': 52000, 'Otros': 12000 },
+    'GDL-T3': { 'Mano de Obra': 39000, 'Refacciones': 47000, 'Otros': 17000 },
+  };
+  const defaults = { 'Mano de Obra': 30000, 'Refacciones': 45000, 'Otros': 10000 };
+  const dataCostos = costosPorUnidad[unidad] || defaults;
+
+  const canvas = document.getElementById('costChart');
+  if (canvas) drawCostChart(canvas, dataCostos);
+
+  
   }
+  function openLightbox(src) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    lb.style.display = 'flex';
+  }
+  
+  function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+  }
+  
+  function drawCostChart(canvas, data) {
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+  
+    // Paleta discreta (coincide bien con tu UI)
+    const colors = ['#4f8cff', '#15d187', '#ffd166'];
+    const labels = Object.keys(data);
+    const values = Object.values(data);
+  
+    // Márgenes y escala
+    const padding = { top: 16, right: 18, bottom: 40, left: 38 };
+    const chartW = W - padding.left - padding.right;
+    const chartH = H - padding.top - padding.bottom;
+    const maxVal = Math.max(...values) * 1.2 || 1;
+  
+    // Fondo sutil + ejes
+    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillRect(padding.left, padding.top, chartW, chartH);
+  
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartH);
+    ctx.lineTo(padding.left + chartW, padding.top + chartH);
+    ctx.stroke();
+  
+    // Grid horizontal (3 líneas)
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    for (let i = 1; i <= 3; i++) {
+      const y = padding.top + chartH - (chartH * i / 3);
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(padding.left + chartW, y);
+      ctx.stroke();
+    }
+  
+    // Barras
+    const gap = 20;
+    const barW = (chartW - gap * (values.length + 1)) / values.length;
+    values.forEach((val, i) => {
+      const x = padding.left + gap + i * (barW + gap);
+      const h = (val / maxVal) * chartH;
+      const y = padding.top + chartH - h;
+  
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fillRect(x, y, barW, h);
+  
+      // Valor encima
+      ctx.fillStyle = '#cfe0f2';
+      ctx.font = '12px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(`$${val.toLocaleString('es-MX')}`, x + barW / 2, y - 6);
+    });
+  
+    // Etiquetas
+    labels.forEach((lb, i) => {
+      const x = padding.left + gap + i * (barW + gap) + barW / 2;
+      const y = padding.top + chartH + 18;
+      ctx.fillStyle = '#aab7c6';
+      ctx.font = '12px Inter, system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(lb, x, y);
+    });
+  
+    // Ticks del eje Y (0, 50%, 100%)
+    ctx.fillStyle = '#8b98a7';
+    ctx.textAlign = 'right';
+    ctx.font = '11px Inter, system-ui, sans-serif';
+    [0, 0.5, 1].forEach(p => {
+      const val = Math.round(maxVal * p);
+      const y = padding.top + chartH - chartH * p;
+      ctx.fillText(`$${val.toLocaleString('es-MX')}`, padding.left - 6, y + 4);
+    });
+  }
+  

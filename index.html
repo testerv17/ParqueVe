@@ -2,23 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Fase 1 — Sistema Control Vehicular</title>
+  <title>SCV Demo — Fase 1–2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="styles.css" rel="stylesheet" />
 </head>
-<body>
+<body class="light">
+
+  <!-- Toasts -->
   <div id="toast"></div>
 
+  <!-- Topbar -->
   <header class="topbar">
     <div class="brand-inline">
       <div class="logo-dot"></div>
       <strong>SCV · Demo</strong>
       <span class="divider"></span>
-      <span class="phase">Fase 1 — Módulos Base</span>
+      <span class="phase">Fase 1–2 — Módulos Base + Control Avanzado</span>
     </div>
 
     <div class="topbar-actions">
-      <input id="globalSearch" class="input" placeholder="Buscar en Fase 1..." />
+      <input id="globalSearch" class="input" placeholder="Buscar..." />
       <div class="user">
         <span id="userName">Usuario</span>
         <button class="btn-ghost" id="logoutBtn" title="Cerrar sesión">Cerrar</button>
@@ -26,7 +29,9 @@
     </div>
   </header>
 
+  <!-- Layout -->
   <div class="layout">
+    <!-- Sidebar -->
     <aside class="sidebar">
       <nav>
         <p class="section">Módulos Fase 1</p>
@@ -38,23 +43,36 @@
         <button class="nav-item" data-target="mod-proveedores">Catálogo de proveedores</button>
         <button class="nav-item" data-target="mod-reportes">Reportes básicos</button>
 
+        <p class="section">Módulos Fase 2</p>
+        <button class="nav-item" data-target="mod-kilometraje">Bitácora de kilometraje</button>
+        <button class="nav-item" data-target="mod-combustible">Cargas de combustible</button>
+        <button class="nav-item" data-target="mod-preventivos">Preventivos automáticos</button>
+        <button class="nav-item" data-target="mod-correctivos">Flujo de correctivos</button>
+        <button class="nav-item" data-target="mod-disponibilidad">Disponibilidad / MTTR / MTBF</button>
+        <button class="nav-item" data-target="mod-evidencias">Evidencias digitales</button>
+
         <p class="section small">Acciones</p>
         <button id="btnExportCSV" class="nav-item subtle">Exportar CSV</button>
       </nav>
     </aside>
 
+    <!-- Contenido principal -->
     <main class="content">
-      <!-- Configuración de catálogos -->
+      <!-- ========================= -->
+      <!-- FASE 1: Catálogos        -->
+      <!-- ========================= -->
       <section id="mod-catalogos" class="panel visible">
         <div class="panel-header">
           <h2>Configuración de catálogos y Base de datos</h2>
           <button class="btn-primary" data-open="modalVehiculo">+ Nuevo vehículo</button>
         </div>
+
         <div class="kpis">
           <div class="kpi"><span>Total vehículos</span><strong id="kpiVehiculos">—</strong></div>
           <div class="kpi"><span>Conductores</span><strong id="kpiConductores">—</strong></div>
           <div class="kpi"><span>Proveedores</span><strong id="kpiProveedores">—</strong></div>
         </div>
+
         <div class="card">
           <div class="card-header">
             <strong>Vehículos (catálogo)</strong>
@@ -66,7 +84,9 @@
         </div>
       </section>
 
-      <!-- Expediente por vehículo -->
+      <!-- ========================= -->
+      <!-- FASE 1: Expediente       -->
+      <!-- ========================= -->
       <section id="mod-expediente" class="panel">
         <div class="panel-header">
           <h2>Expediente único por vehículo</h2>
@@ -90,25 +110,24 @@
             <div class="table-wrap"><table id="expMants" class="table"></table></div>
           </div>
           <div class="card">
-            <div class="card-header"><strong>Costos acumulados</strong></div>
+            <div class="card-header"><strong>Índice de mantenimiento acumulado</strong></div>
             <div class="card-body">
-              <canvas id="costChart" width="520" height="170" aria-label="Gráfica de costos"></canvas>
-              <p class="muted">Costos ficticios por categoría: Mano de Obra, Refacciones y Otros.</p>
+              <canvas id="costChart" width="520" height="170" aria-label="Gráfica de índice"></canvas>
+              <p class="muted">Puntaje ficticio por categoría (0–100): Mecánica, Eléctrica, Carrocería.</p>
             </div>
           </div>
-          
           <div class="card">
             <div class="card-header"><strong>Galería del vehículo</strong></div>
             <div class="card-body">
               <div id="expGaleria" class="mini-gallery"></div>
             </div>
           </div>
-          
         </div>
-        
       </section>
 
-      <!-- Solicitud de reparación -->
+      <!-- =================================== -->
+      <!-- FASE 1: Solicitudes de reparación  -->
+      <!-- =================================== -->
       <section id="mod-solicitudes" class="panel">
         <div class="panel-header">
           <h2>Solicitud de reparación de área</h2>
@@ -123,7 +142,9 @@
         </div>
       </section>
 
-      <!-- Validación de Control Vehicular -->
+      <!-- =================================== -->
+      <!-- FASE 1: Validación de Control      -->
+      <!-- =================================== -->
       <section id="mod-validacion" class="panel">
         <div class="panel-header"><h2>Validación de Control Vehicular</h2></div>
         <div class="card">
@@ -132,7 +153,9 @@
         </div>
       </section>
 
-      <!-- Aceptación de la reparación -->
+      <!-- =================================== -->
+      <!-- FASE 1: Aceptación de reparación   -->
+      <!-- =================================== -->
       <section id="mod-aceptacion" class="panel">
         <div class="panel-header"><h2>Aceptación de la reparación</h2></div>
         <div class="card">
@@ -141,7 +164,9 @@
         </div>
       </section>
 
-      <!-- Proveedores -->
+      <!-- =================================== -->
+      <!-- FASE 1: Proveedores                -->
+      <!-- =================================== -->
       <section id="mod-proveedores" class="panel">
         <div class="panel-header">
           <h2>Catálogo de proveedores</h2>
@@ -156,14 +181,16 @@
         </div>
       </section>
 
-      <!-- Reportes básicos -->
+      <!-- =================================== -->
+      <!-- FASE 1: Reportes básicos           -->
+      <!-- =================================== -->
       <section id="mod-reportes" class="panel">
         <div class="panel-header"><h2>Reportes básicos</h2></div>
         <div class="grid-2">
           <div class="card">
             <div class="card-header"><strong>Expediente del vehículo</strong></div>
             <div class="card-body">
-              <p class="muted">Descarga un CSV del expediente y costos acumulados (datos ficticios).</p>
+              <p class="muted">Descarga un CSV del expediente (datos ficticios).</p>
               <button class="btn-secondary" id="btnReporteExpediente">Descargar CSV</button>
             </div>
           </div>
@@ -176,28 +203,115 @@
           </div>
         </div>
       </section>
+
+      <!-- ========================= -->
+      <!-- FASE 2: Kilometraje      -->
+      <!-- ========================= -->
+      <section id="mod-kilometraje" class="panel">
+        <div class="panel-header">
+          <h2>Bitácora de kilometraje</h2>
+          <button class="btn-primary" data-open="modalKm">+ Registrar lectura</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Lecturas por unidad</strong>
+            <input id="filterKm" class="input small" placeholder="Filtrar..." />
+          </div>
+          <div class="table-wrap"><table id="tablaKm" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- ========================= -->
+      <!-- FASE 2: Combustible      -->
+      <!-- ========================= -->
+      <section id="mod-combustible" class="panel">
+        <div class="panel-header">
+          <h2>Cargas de combustible</h2>
+          <button class="btn-primary" data-open="modalFuel">+ Registrar carga</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Bitácora de combustible</strong>
+            <input id="filterFuel" class="input small" placeholder="Filtrar..." />
+          </div>
+          <div class="table-wrap"><table id="tablaFuel" class="table"></table></div>
+        </div>
+        <p class="muted" style="margin:8px 0 0 4px">
+          Nota: Para cálculos finos de rendimiento (km/l) requerimos el dato del proveedor de combustible (facturación, litros, precio unitario).
+        </p>
+      </section>
+
+      <!-- ========================= -->
+      <!-- FASE 2: Preventivos      -->
+      <!-- ========================= -->
+      <section id="mod-preventivos" class="panel">
+        <div class="panel-header">
+          <h2>Preventivos automáticos</h2>
+          <button class="btn-primary" data-open="modalReglas">⚙️ Reglas por unidad</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><strong>Próximos servicios estimados</strong></div>
+          <div class="table-wrap"><table id="tablaPrev" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- ========================= -->
+      <!-- FASE 2: Correctivos      -->
+      <!-- ========================= -->
+      <section id="mod-correctivos" class="panel">
+        <div class="panel-header">
+          <h2>Flujo de correctivos</h2>
+          <button class="btn-primary" data-open="modalCorrectivo">+ Nuevo correctivo</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><strong>Correctivos</strong></div>
+          <div class="table-wrap"><table id="tablaCorrectivos" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- ================================ -->
+      <!-- FASE 2: Disponibilidad/MTTR/MTBF -->
+      <!-- ================================ -->
+      <section id="mod-disponibilidad" class="panel">
+        <div class="panel-header"><h2>Disponibilidad / MTTR / MTBF</h2></div>
+        <div class="kpis">
+          <div class="kpi"><span>Disponibilidad flota</span><strong id="dispFlota">—</strong></div>
+          <div class="kpi"><span>MTTR promedio</span><strong id="mttrFlota">—</strong></div>
+          <div class="kpi"><span>MTBF promedio</span><strong id="mtbfFlota">—</strong></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><strong>Indicadores por unidad</strong></div>
+          <div class="table-wrap"><table id="tablaIndicadores" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- ========================= -->
+      <!-- FASE 2: Evidencias       -->
+      <!-- ========================= -->
+      <section id="mod-evidencias" class="panel">
+        <div class="panel-header">
+          <h2>Evidencias digitales</h2>
+          <button class="btn-primary" data-open="modalEvidencia">+ Adjuntar evidencia</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><strong>Listado</strong></div>
+          <div class="table-wrap"><table id="tablaEvidencias" class="table"></table></div>
+        </div>
+      </section>
     </main>
   </div>
 
-  <!-- Modales -->
+  <!-- ========== Modales Fase 1 ========== -->
   <dialog id="modalVehiculo" class="modal">
     <form method="dialog" class="form">
       <h3>Nuevo vehículo</h3>
       <div class="grid-2">
-        <div class="form-field">
-          <label>Unidad</label><input id="vehUnidad" required placeholder="GDL-T3" />
-        </div>
-        <div class="form-field">
-          <label>Placas</label><input id="vehPlacas" required placeholder="ABC-123" />
-        </div>
+        <div class="form-field"><label>Unidad</label><input id="vehUnidad" required placeholder="QRO-V1" /></div>
+        <div class="form-field"><label>Placas</label><input id="vehPlacas" required placeholder="XYZ-123A" /></div>
       </div>
       <div class="grid-2">
-        <div class="form-field">
-          <label>Marca</label><input id="vehMarca" placeholder="Freightliner" />
-        </div>
-        <div class="form-field">
-          <label>Modelo</label><input id="vehModelo" placeholder="Cascadia 2021" />
-        </div>
+        <div class="form-field"><label>Marca</label><input id="vehMarca" placeholder="Volvo" /></div>
+        <div class="form-field"><label>Modelo</label><input id="vehModelo" placeholder="FH 2020" /></div>
       </div>
       <div class="form-actions">
         <button class="btn-ghost" value="cancel">Cancelar</button>
@@ -209,9 +323,7 @@
   <dialog id="modalProveedor" class="modal">
     <form method="dialog" class="form">
       <h3>Nuevo proveedor</h3>
-      <div class="form-field">
-        <label>Nombre</label><input id="provNombre" required placeholder="Refacciones del Centro" />
-      </div>
+      <div class="form-field"><label>Nombre</label><input id="provNombre" required placeholder="Refacciones del Centro" /></div>
       <div class="grid-2">
         <div class="form-field"><label>Contacto</label><input id="provContacto" placeholder="María López" /></div>
         <div class="form-field"><label>Teléfono</label><input id="provTel" placeholder="33 1234 5678" /></div>
@@ -247,14 +359,162 @@
       </div>
     </form>
   </dialog>
-  
-  
 
-  <script src="app.js"></script>
+  <!-- ========== Modales Fase 2 ========== -->
+  <dialog id="modalKm" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nueva lectura de kilometraje</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="kmUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Kilometraje</label>
+          <input id="kmValor" type="number" placeholder="185250" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Fecha</label>
+        <input id="kmFecha" type="date" />
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveKm" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalFuel" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nueva carga de combustible</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="fuelUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Litros</label>
+          <input id="fuelLitros" type="number" placeholder="120" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Proveedor</label>
+          <input id="fuelProveedor" placeholder="Gasolinera Demo SA" />
+        </div>
+        <div class="form-field">
+          <label>Fecha</label>
+          <input id="fuelFecha" type="date" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveFuel" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalReglas" class="modal">
+    <form method="dialog" class="form">
+      <h3>Reglas de preventivo por unidad</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="prevUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Cada X km</label>
+          <input id="prevKm" type="number" placeholder="10000" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Cada X meses</label>
+        <input id="prevMeses" type="number" placeholder="6" />
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveReglas" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalCorrectivo" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nuevo correctivo</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="corrUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Falla</label>
+          <input id="corrFalla" placeholder="Freno delantero" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Estado</label>
+        <select id="corrEstado">
+          <option>Pendiente</option>
+          <option>En progreso</option>
+          <option>Cerrado</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveCorr" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalEvidencia" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nueva evidencia</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="evUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Tipo</label>
+          <select id="evTipo">
+            <option>Foto</option>
+            <option>Factura</option>
+            <option>Checklist</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Archivo (ruta demo)</label>
+        <input id="evRuta" placeholder="img/nic-t2-1.png" />
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveEvidencia" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- Lightbox para imágenes -->
-<div id="lightbox" class="lightbox">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <span class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">&times;</span>
     <img id="lightbox-img" src="" alt="Preview" />
   </div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script>
+    // Wire-up para abrir cualquier <dialog> con data-open="idDelModal"
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-open]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const id = btn.getAttribute('data-open');
+          const dlg = document.getElementById(id);
+          if (dlg && typeof dlg.showModal === 'function') dlg.showModal();
+        });
+      });
+    });
+  </script>
 </body>
 </html>

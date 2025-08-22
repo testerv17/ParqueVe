@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Fase 1 — Sistema Control Vehicular</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="toast"></div>
+
+  <header class="topbar">
+    <div class="brand-inline">
+      <div class="logo-dot"></div>
+      <strong>SCV · Demo</strong>
+      <span class="divider"></span>
+      <span class="phase">Fase 1 — Módulos Base</span>
+    </div>
+
+    <div class="topbar-actions">
+      <input id="globalSearch" class="input" placeholder="Buscar en Fase 1..." />
+      <div class="user">
+        <span id="userName">Usuario</span>
+        <button class="btn-ghost" id="logoutBtn" title="Cerrar sesión">Cerrar</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <nav>
+        <p class="section">Módulos Fase 1</p>
+        <button class="nav-item active" data-target="mod-catalogos">Configuración de catálogos & Base de datos</button>
+        <button class="nav-item" data-target="mod-expediente">Expediente por vehículo</button>
+        <button class="nav-item" data-target="mod-solicitudes">Solicitud de reparación de área</button>
+        <button class="nav-item" data-target="mod-validacion">Validación de Control Vehicular</button>
+        <button class="nav-item" data-target="mod-aceptacion">Aceptación de la reparación</button>
+        <button class="nav-item" data-target="mod-proveedores">Catálogo de proveedores</button>
+        <button class="nav-item" data-target="mod-reportes">Reportes básicos</button>
+
+        <p class="section small">Acciones</p>
+        <button id="btnExportCSV" class="nav-item subtle">Exportar CSV</button>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <!-- Configuración de catálogos -->
+      <section id="mod-catalogos" class="panel visible">
+        <div class="panel-header">
+          <h2>Configuración de catálogos y Base de datos</h2>
+          <button class="btn-primary" data-open="modalVehiculo">+ Nuevo vehículo</button>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><span>Total vehículos</span><strong id="kpiVehiculos">—</strong></div>
+          <div class="kpi"><span>Conductores</span><strong id="kpiConductores">—</strong></div>
+          <div class="kpi"><span>Proveedores</span><strong id="kpiProveedores">—</strong></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Vehículos (catálogo)</strong>
+            <input id="filterVehiculos" class="input small" placeholder="Filtrar vehículos..." />
+          </div>
+          <div class="table-wrap">
+            <table id="tablaVehiculos" class="table"></table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Expediente por vehículo -->
+      <section id="mod-expediente" class="panel">
+        <div class="panel-header">
+          <h2>Expediente único por vehículo</h2>
+          <select id="expUnidad" class="input small"></select>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><strong>Datos técnicos</strong></div>
+            <div class="card-body" id="expDatos"></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><strong>Métricas</strong></div>
+            <div class="card-body" id="expMetricas"></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><strong>Historial de mantenimientos</strong></div>
+            <div class="table-wrap"><table id="expMants" class="table"></table></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><strong>Costos acumulados</strong></div>
+            <div class="card-body">
+              <div id="miniChart" class="mini-chart" aria-hidden="true"></div>
+              <p class="muted">Distribución ficticia: mano de obra, refacciones, otros.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><strong>Galería del vehículo</strong></div>
+            <div class="card-body">
+              <div id="expGaleria" class="mini-gallery"></div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Solicitud de reparación -->
+      <section id="mod-solicitudes" class="panel">
+        <div class="panel-header">
+          <h2>Solicitud de reparación de área</h2>
+          <button class="btn-primary" data-open="modalSolicitud">+ Nueva solicitud</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Solicitudes</strong>
+            <input id="filterSolicitudes" class="input small" placeholder="Filtrar..." />
+          </div>
+          <div class="table-wrap"><table id="tablaSolicitudes" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- Validación de Control Vehicular -->
+      <section id="mod-validacion" class="panel">
+        <div class="panel-header"><h2>Validación de Control Vehicular</h2></div>
+        <div class="card">
+          <div class="card-header"><strong>Validaciones pendientes</strong></div>
+          <div class="table-wrap"><table id="tablaValidaciones" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- Aceptación de la reparación -->
+      <section id="mod-aceptacion" class="panel">
+        <div class="panel-header"><h2>Aceptación de la reparación</h2></div>
+        <div class="card">
+          <div class="card-header"><strong>Órdenes por aceptar</strong></div>
+          <div class="table-wrap"><table id="tablaAceptaciones" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- Proveedores -->
+      <section id="mod-proveedores" class="panel">
+        <div class="panel-header">
+          <h2>Catálogo de proveedores</h2>
+          <button class="btn-primary" data-open="modalProveedor">+ Nuevo proveedor</button>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <strong>Listado</strong>
+            <input id="filterProveedores" class="input small" placeholder="Filtrar proveedores..." />
+          </div>
+          <div class="table-wrap"><table id="tablaProveedores" class="table"></table></div>
+        </div>
+      </section>
+
+      <!-- Reportes básicos -->
+      <section id="mod-reportes" class="panel">
+        <div class="panel-header"><h2>Reportes básicos</h2></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header"><strong>Expediente del vehículo</strong></div>
+            <div class="card-body">
+              <p class="muted">Descarga un CSV del expediente y costos acumulados (datos ficticios).</p>
+              <button class="btn-secondary" id="btnReporteExpediente">Descargar CSV</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><strong>Histórico de solicitudes y reparaciones</strong></div>
+            <div class="card-body">
+              <p class="muted">Genera un CSV con solicitudes y estados.</p>
+              <button class="btn-secondary" id="btnReporteSolicitudes">Descargar CSV</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modales -->
+  <dialog id="modalVehiculo" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nuevo vehículo</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label><input id="vehUnidad" required placeholder="GDL-T3" />
+        </div>
+        <div class="form-field">
+          <label>Placas</label><input id="vehPlacas" required placeholder="ABC-123" />
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Marca</label><input id="vehMarca" placeholder="Freightliner" />
+        </div>
+        <div class="form-field">
+          <label>Modelo</label><input id="vehModelo" placeholder="Cascadia 2021" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveVehiculo" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalProveedor" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nuevo proveedor</h3>
+      <div class="form-field">
+        <label>Nombre</label><input id="provNombre" required placeholder="Refacciones del Centro" />
+      </div>
+      <div class="grid-2">
+        <div class="form-field"><label>Contacto</label><input id="provContacto" placeholder="María López" /></div>
+        <div class="form-field"><label>Teléfono</label><input id="provTel" placeholder="33 1234 5678" /></div>
+      </div>
+      <div class="form-field"><label>Email</label><input id="provEmail" type="email" placeholder="ventas@proveedor.com" /></div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveProveedor" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="modalSolicitud" class="modal">
+    <form method="dialog" class="form">
+      <h3>Nueva solicitud de reparación</h3>
+      <div class="grid-2">
+        <div class="form-field">
+          <label>Unidad</label>
+          <select id="solUnidad"></select>
+        </div>
+        <div class="form-field">
+          <label>Área solicitante</label>
+          <input id="solArea" placeholder="Operaciones" />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Descripción</label>
+        <textarea id="solDesc" rows="3" placeholder="Ruido en frenos delanteros..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-ghost" value="cancel">Cancelar</button>
+        <button class="btn-primary" id="saveSolicitud" value="default">Enviar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Acceso — Sistema Control Vehicular</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body class="auth-body">
+  <main class="auth-card">
+    <div class="brand">
+      <div class="logo-dot"></div>
+      <h1>Sistema Control Vehicular</h1>
+      <p class="muted">Demo funcional — Fase 1</p>
+    </div>
+
+    <form id="loginForm" class="form">
+      <div class="form-field">
+        <label>Correo</label>
+        <input type="email" id="email" placeholder="admin@demo.com" required />
+      </div>
+      <div class="form-field">
+        <label>Contraseña</label>
+        <input type="password" id="password" placeholder="Demo2025!" required />
+      </div>
+      <button class="btn-primary w-100" type="submit">Ingresar</button>
+      <p class="hint">Credenciales de demo: <strong>admin@demo.com</strong> / <strong>Demo2025!</strong></p>
+    </form>
+
+    <footer class="auth-footer">
+      <small>© 2025 Tu Empresa — Demo</small>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const pass  = document.getElementById('password').value.trim();
+
+      // Demo simple: credenciales fijas
+      if (email.toLowerCase() === 'admin@demo.com' && pass === 'Demo2025!') {
+        localStorage.setItem('auth_token', 'demo_token');
+        localStorage.setItem('auth_user', JSON.stringify({ name: 'Administrador', email }));
+        window.location.href = 'index.html';
+      } else {
+        alert('Credenciales inválidas. Usa admin@demo.com / Demo2025!');
+      }
+    });
+  </script>
+</body>
+</html>

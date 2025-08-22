@@ -255,3 +255,15 @@ body.light{
   body.light .mini-gallery img{ border-color:#e3e9f1; }
   body.light #costChart{ background:#ffffff; border:1px solid var(--border); }
   
+/* Logo en login */
+.logo-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.logo-img {
+  max-width: 140px;    /* ajusta el tamaño del logo */
+  height: auto;
+}
+

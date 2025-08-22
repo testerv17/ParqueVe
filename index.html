@@ -92,10 +92,11 @@
           <div class="card">
             <div class="card-header"><strong>Costos acumulados</strong></div>
             <div class="card-body">
-              <div id="miniChart" class="mini-chart" aria-hidden="true"></div>
-              <p class="muted">Distribución ficticia: mano de obra, refacciones, otros.</p>
+              <canvas id="costChart" width="520" height="170" aria-label="Gráfica de costos"></canvas>
+              <p class="muted">Costos ficticios por categoría: Mano de Obra, Refacciones y Otros.</p>
             </div>
           </div>
+          
           <div class="card">
             <div class="card-header"><strong>Galería del vehículo</strong></div>
             <div class="card-body">
@@ -104,6 +105,7 @@
           </div>
           
         </div>
+        
       </section>
 
       <!-- Solicitud de reparación -->
@@ -245,7 +247,14 @@
       </div>
     </form>
   </dialog>
+  
+  
 
   <script src="app.js"></script>
+  <!-- Lightbox para imágenes -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Preview" />
+  </div>
 </body>
 </html>
